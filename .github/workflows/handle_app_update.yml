@@ -34,7 +34,7 @@ jobs:
           git fetch $APP_NAME main
 
           # ディレクトリ存在確認
-          f [ -d "apps/$APP_NAME" ]; then
+          if [ -d "apps/$APP_NAME" ]; then
             echo "Updating existing subtree..."
             git subtree pull --prefix=apps/$APP_NAME $APP_NAME main --squash -m "chore($APP_NAME): update to $VERSION"
           else

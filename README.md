@@ -1,42 +1,33 @@
-# [Project Name] Portal Repository
+# Project Portal Repository
 
-本リポジトリは、プロジェクト全体のドキュメントを集約し、統合ポータルサイトとして公開・管理するための親リポジトリです。
-**Docs as Code** の原則に基づき、アプリケーションリポジトリ（子）からの更新を自動で取り込みます。
+<!-- Project Portal リポジトリの概要などをここに記載してください -->
+<!-- 技術スタックは、markdown.badges を活用ください -->
 
-## ⚠️ 重要: 運用ルール
-* [cite_start]**直接編集の禁止:** `apps/` ディレクトリ配下は自動同期されるため、本リポジトリで直接編集・コミットしないでください [cite: 565]。
-* [cite_start]**マージ戦略:** Pull Request は必ず **Squash and Merge** してください [cite: 543]。
-* [cite_start]**権限:** `main` ブランチへの直接 Push は禁止されています [cite: 452]。
+## 🛠 開発ルール (Docs as Code)
 
-## 🚀 プロジェクト立ち上げ手順 (管理者向け)
+### ブランチ命名規則
 
-### 1. リポジトリ作成
-このテンプレート (`temp_knowledge_portal`) から新規リポジトリを作成してください。
+| Prefix | 用途 | SemVer影響 | 例 |
+| :--- | :--- | :--- | :--- |
+| `main` | メインブランチ | なし | `main` |
+| `develop` | ステージングブランチ | なし | `develop` |
+| `feature/` | 新機能追加 | Minor | `feature/add-login-function` |
+| `bugfix/` | バグ修正 | Patch | `bugfix/fix-crash-on-startup` |
+| `hotfix/` | 緊急修正 | Patch | `hotfix/fix-security-vulnerability` |
+| `release/` | リリース準備 | Patch/Minor | `release/v1.2.0-prep` |
+| `docs/` | ドキュメント更新のみ | Patch | `docs/update-api-docs` |
+| `chore/` | その他メンテナンス | Patch | `chore/update-dependencies` |
 
-### 2. Secrets設定
-[cite_start]`Settings` > `Secrets and variables` > `Actions` に以下を登録してください [cite: 474]。
-* **Name:** `PROJECT_REPO_PAT`
-* **Value:** 管理者の Personal Access Token (Repo権限付き)
+### コミットメッセージ規約
 
-### 3. 子リポジトリの連携 (Subtree登録)
-[cite_start]ローカル環境で以下のコマンドを実行し、子リポジトリを登録します [cite: 480-483]。
+- `type(scope): subject` 例: `feat(api): add login`
+- type例: feat, fix, docs, chore, refactor, test, ci
+- scopeは任意、subjectは簡潔に
 
-```bash
-# 1. リモートの追加
-git remote add [アプリ名] [子リポジトリのURL]
+### 運用のポイント
 
-# 2. Subtreeの追加 (初回のみ)
-git subtree add --prefix=apps/[アプリ名] [アプリ名] main --squash
-
-# 3. Push
-git push origin main
-```
-
-### 4. メニュー更新
-
-`mkdocs.yml` の `nav:` セクションに、追加したアプリへのリンクを追記してください。
-
-## 📚 関連リンク
-
-- [統合運用ガイドライン]()
-- [プロジェクトボード]()
+- **Docs as Code**: コード修正時はdocs/も必ず更新
+- **main直Push禁止**: PR経由でマージ
+- **CI/CD必須**: GitHub Actions等で自動テスト・デプロイ
+- **README.md整備**: QuickStart・開発手順・依存関係を明記
+- **テンプレート活用**: PRテンプレート・Issueテンプレートを用意

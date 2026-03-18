@@ -1,9 +1,14 @@
 name: Sync Labels
+
 on:
   push:
     paths:
       - '.github/labels.yml'
   workflow_dispatch: # 手動実行ボタンも有効化
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   labels:
